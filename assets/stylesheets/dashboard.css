@@ -1,0 +1,219 @@
+/* ----CHUNG---- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:ital,wght@400;500;600;700;800&display=swap');
+:root{
+    --primary-color:#c6c3c3;
+    --second-color:#ffffff;
+    --black-color:#000000;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+/* -------ĐĂNG NHẬP------ */
+.dn{
+    background-image: url("../doan1/img/mt.jpg");
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+a{
+    text-decoration: none;
+    color: var(--second-color);
+}
+a:hover{
+    text-decoration: underline;
+}
+.frmdn{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+.khungdn{
+    position: relative;
+    width: 450px;
+    backdrop-filter: blur(25px);
+    border: 2px solid var(--primary-color);
+    border-radius: 15px;
+    padding: 4.5cm 2.5cm 2cm 2.5cm;
+    color: var(--second-color);
+    box-shadow: 0px 0px 10px 2px rgba(0, 0, 0, 0.3);
+}
+.tieudedn{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: var(--primary-color);
+    width: 250px;
+    height: 70px;
+    border-radius: 0 0 20px 20px;
+}
+.tieudedn span{
+    font-size: 30px;
+    color: var(--black-color);
+}
+.tieudedn::before{
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -30px;
+    width: 30px;
+    height: 30px;
+    border-top-right-radius: 50%;
+    background: transparent;
+    box-shadow: 15px 0 0 0 var(--primary-color);
+}
+.tieudedn::after{
+    content: "";
+    position: absolute;
+    top: 0;
+    right: -30px;
+    width: 30px;
+    height: 30px;
+    border-top-left-radius: 50%;
+    background: transparent;
+    box-shadow: -15px 0 0 0 var(--primary-color);
+}
+.tk{
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    margin: 20px 0;
+}
+.nhap{
+    width: 100%;
+    height: 55px;
+    font-size: 16px;
+    background: transparent;
+    color: var(--second-color);
+    padding-inline: 20px 50px;
+    border: 2px solid var(--primary-color);
+    border-radius: 30px;
+    outline: none;
+}
+#ten{
+    margin-bottom: 10px;
+}
+.lbl{
+    position: absolute;
+    top: 15px;
+    left: 20px;
+    transition: .2s;
+}
+.nhap:focus ~ .lbl,
+.nhap:valid ~ .lbl{
+    position: absolute;
+    top: -10px;
+    left: 20px;
+    font-size: 14px;
+    background-color: var(--primary-color);
+    border-radius: 30px;
+    color: var(--black-color);
+    padding: 0 10px;
+}
+.icon{
+    position: absolute;
+    top: 18px;
+    right: 25px;
+    font-size: 20px;
+}
+.nho-quen{
+    display: flex;
+    justify-content: space-between;
+    font-size: 15px;
+}
+.nutdn{
+    width: 100%;
+    height: 50px;
+    background: #ececec;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: .3s;
+}
+.nutdn:hover{
+    background: #4edf49;
+}
+
+@media only screen and(max-width: 564px) {
+    .frmdn{
+        padding: 20px;
+    }
+    .khungdn{
+        padding: 4.5cm 1.5cm 2cm 1.5cm;
+    }
+}
+
+/* ----TRANG CHỦ---- */
+
+.menutren {
+    background-color: #333;
+    color: #fff;
+    padding: 10px;
+    text-align: right;
+}
+
+.menutren label {
+    margin-left: 20px;
+}
+
+.ndchinh{
+    margin-top:5%;
+    display: flex;
+    flex: 4;
+}
+/* Phần menu chính */
+.menuchinh {
+    flex: 1;
+    width: 20%;
+    background-color: #f4f4f4;
+    padding: 20px;
+}
+
+.menuchinh a {
+    display: block;
+    color: #333;
+    text-decoration: none;
+    padding: 10px 0;
+}
+
+.trangchinh {
+    flex: 3;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr); /* Chia thành 2 cột bằng nhau */
+    grid-template-rows: repeat(2, 1fr); /* Chia thành 2 dòng bằng nhau */
+    gap: 200px;
+    padding-left: 150px;
+}
+
+.khung.lm {
+    grid-column: 1; /* Cột đầu tiên */
+    grid-row: 1; /* Dòng đầu tiên */
+    border: 3px solid #000000;
+}
+
+.khung.sc {
+    grid-column: 2; /* Cột thứ hai */
+    grid-row: 1; /* Dòng đầu tiên */
+}
+
+.khung.dd {
+    grid-column: 1; /* Cột đầu tiên */
+    grid-row: 2; /* Dòng thứ hai */
+}
+
+.khung.ngung {
+    grid-column: 2; /* Cột thứ hai */
+    grid-row: 2; /* Dòng thứ hai */
+}
