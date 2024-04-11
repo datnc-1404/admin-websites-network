@@ -1,3 +1,11 @@
+
+<?php
+    session_start();
+    // Kiểm tra nếu có thông báo lỗi trong session, hiển thị và xóa thông báo sau khi đã hiển thị
+    $error = isset($_SESSION['error']) ? $_SESSION['error'] : '';
+    unset($_SESSION['error']); // Xóa thông báo lỗi sau khi đã hiển thị
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,6 +21,11 @@
                 <div class="card">
                     <div class="card-body">
                         <h2 class="card-title text-center">Login</h2>
+                        <?php if (!empty($error)): ?>
+                            <div class="alert alert-danger">
+                                <?php echo $error; ?>
+                            </div>
+                        <?php endif; ?>
                         <form action="index.php?controller=pages&action=login" method="POST">
                             <div class="mb-3">
                                 <label for="username" class="form-label">Username:</label>

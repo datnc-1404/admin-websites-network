@@ -3,12 +3,10 @@ session_start();
 // Kiểm tra xem người dùng đã đăng nhập chưa
 if (!isset($_SESSION['username'])) {
     // Nếu chưa đăng nhập, chuyển hướng về trang đăng nhập
-    header('Location: login.php');
+    header('Location: index.php?controller=pages&action=login');
     exit;
 }
 
-// Nếu đã đăng nhập, hiển thị nội dung trang dashboard
-echo "Welcome, " . $_SESSION['username'] . "! You are logged in.";
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -21,8 +19,8 @@ echo "Welcome, " . $_SESSION['username'] . "! You are logged in.";
 <body>
     <form action="trangchu.php" class="">
         <div class="menutren">
-            <label for="">Nguyễn Văn A</label>
-            <label for="">Đăng xuất</label>
+            <label for=""><?php echo $_SESSION['username']; ?></label>
+            <a href="index.php?controller=pages&action=logout">Đăng xuất</a>
         </div>
         <div class="ndchinh">
         <div class="menuchinh">
