@@ -24,16 +24,21 @@ if (!isset($_SESSION['username'])) {
   <!-- Theme style -->
   <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- datatable  -->
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css">
+  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.semanticui.min.css">
 </head>
-<!--
-`body` tag options:
-
-  Apply one or more of the following classes to to the body tag
-  to get the desired effect
-
-  * sidebar-collapse
-  * sidebar-mini
--->
+<style>
+        /* Remove the arrow from the dropdown button */
+        .dropdown-toggle::after {
+            display: none;
+        }
+        
+        /* Style the button with padding */
+        .dropdown-toggle {
+            padding: 0.375rem 0.75rem;
+        }
+    </style>
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
@@ -224,7 +229,7 @@ if (!isset($_SESSION['username'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=pages&action=dashboard" class="nav-link active">
+                <a href="index.php?controller=pages&action=dashboard" class="nav-link">
                 <i class="manage bi bi-list"></i>
                   <p>Quản lý chung</p>
                 </a>
@@ -252,7 +257,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=contracts&action=index" class="nav-link">
+                <a href="index.php?controller=contracts&action=index" class="nav-link ">
                 <i class="contract bi bi-journal"></i>
                 <p>
                   Danh mục hợp đồng
@@ -262,7 +267,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=install&action=index" class="nav-link">
+                <a href="index.php?controller=install&action=index" class="nav-link  active">
                 <i class="new bi bi-gear-wide-connected"></i>
                 <p>
                   Hồ sơ lắp đặt mới
@@ -309,8 +314,41 @@ if (!isset($_SESSION['username'])) {
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <?php echo "Đây là danh sách lắp đặt mới"?>
-    <!-- /.content -->
+        <!-- Content Header (Page header) -->
+        <div class="content-header">
+          <div class="container-fluid">
+            <div class="row mb-2">
+              <div class="col-sm-6">
+                <h1 class="m-0">Hồ sơ lắp đặt mới</h1>
+              </div><!-- /.col -->
+              <div class="col-sm-6">
+                <ol class="breadcrumb float-sm-right">
+                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
+                  <li class="breadcrumb-item active">Hồ sơ lắp đặt mới</li>
+                </ol>
+              </div><!-- /.col -->
+            </div><!-- /.row -->
+          </div><!-- /.container-fluid -->
+        </div>
+        <!-- /.content-header -->
+
+        <div class="content">
+        <table id="contractTable" class="table table-striped table-bordered" style="width:100%">
+            <thead>
+                <tr>
+                    <th>Ma HD</th>
+                    <th>Ten HD</th>
+                    <th>NDHD</th>
+                    <th>MaKH</th>
+                    <th>MaNV</th>
+                    <th>Thao tác</th>
+                </tr>
+            </thead>
+            <tbody>
+                <!-- Dữ liệu sẽ được load ở đây -->
+            </tbody>
+        </table>
+        </div>
   </div>
   <!-- /.content-wrapper -->
 
@@ -346,5 +384,41 @@ if (!isset($_SESSION['username'])) {
 <script src="../websites/assets/dist/js/demo.js"></script>
 <!-- AdminLTE dashboard demo (This is only for demo purposes) -->
 <script src="../websites/assets/dist/js/pages/dashboard3.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
+<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.min.js"></script>
+<script>
+    $(document).ready(function () {
+        $('#contractTable').DataTable({
+          ajax: 'index.php?controller=install&action=getInstallList',
+          columns: [ 
+            { data: 'id' },
+            { data: 'type_net' },
+            { data: 'id_customer' },
+            { data: 'id_employee' },
+            { data: 'status' },
+            { 
+              data : null ,
+              render: function(data, type, row) {
+                    if (type === 'display') {
+                        return `
+                            <div class="dropdown">
+                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                   <i class="fas fa-ellipsis-h"></i>
+                                </button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <a class="dropdown-item" href="#">Cập nhật</a>
+                                    <a class="dropdown-item" href="#">Xóa</a>
+                                </div>
+                            </div>
+                        `;
+                    }
+                    return data;
+                }
+            }
+            
+          ]
+        });
+    });
+</script>
 </body>
 </html>
