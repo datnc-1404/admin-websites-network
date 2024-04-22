@@ -13,7 +13,7 @@
 }
 /* -------ĐĂNG NHẬP------ */
 .dn{
-    background-image: url("../doan1/img/mt.jpg");
+    background-image: url("../websites/img/anh.jpg");
     background-position: center;
     background-size: cover;
     background-repeat: no-repeat;
@@ -153,67 +153,4 @@ a:hover{
     .khungdn{
         padding: 4.5cm 1.5cm 2cm 1.5cm;
     }
-}
-
-/* ----TRANG CHỦ---- */
-
-.menutren {
-    background-color: #333;
-    color: #fff;
-    padding: 10px;
-    text-align: right;
-}
-
-.menutren label {
-    margin-left: 20px;
-}
-
-.ndchinh{
-    margin-top:5%;
-    display: flex;
-    flex: 4;
-}
-/* Phần menu chính */
-.menuchinh {
-    flex: 1;
-    width: 20%;
-    background-color: #f4f4f4;
-    padding: 20px;
-}
-
-.menuchinh a {
-    display: block;
-    color: #333;
-    text-decoration: none;
-    padding: 10px 0;
-}
-
-.trangchinh {
-    flex: 3;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr); /* Chia thành 2 cột bằng nhau */
-    grid-template-rows: repeat(2, 1fr); /* Chia thành 2 dòng bằng nhau */
-    gap: 200px;
-    padding-left: 150px;
-}
-
-.khung.lm {
-    grid-column: 1; /* Cột đầu tiên */
-    grid-row: 1; /* Dòng đầu tiên */
-    border: 3px solid #000000;
-}
-
-.khung.sc {
-    grid-column: 2; /* Cột thứ hai */
-    grid-row: 1; /* Dòng đầu tiên */
-}
-
-.khung.dd {
-    grid-column: 1; /* Cột đầu tiên */
-    grid-row: 2; /* Dòng thứ hai */
-}
-
-.khung.ngung {
-    grid-column: 2; /* Cột thứ hai */
-    grid-row: 2; /* Dòng thứ hai */
 }

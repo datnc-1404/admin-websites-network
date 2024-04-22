@@ -23,6 +23,7 @@ if (!isset($_SESSION['username'])) {
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
 </head>
 <!--
 `body` tag options:
@@ -222,71 +223,83 @@ if (!isset($_SESSION['username'])) {
               </p>
             </a>
             <ul class="nav nav-treeview">
-
               <li class="nav-item">
-                <a href="index.php?controller=pages&action=dashboard" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="index.php?controller=pages&action=dashboard" class="nav-link active">
+                <i class="manage bi bi-list"></i>
                   <p>Quản lý chung</p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=employees&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh sách nhân viên
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=customers&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh sách khách hàng
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=contracts&action=index" class="nav-link active">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh mục hợp đồng
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=install&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ lắp đặt mới
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=relocation&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ di dời
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=repair&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ sửa chữa
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=unuse&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=employees&action=index" class="nav-link">
+                <i class="staff bi bi-person-fill"></i>
+                <p>
+                  Danh sách nhân viên
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=customers&action=index" class="nav-link">
+                <i class="guest bi bi-people-fill"></i>
+                <p>
+                  Danh sách khách hàng
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=contracts&action=index" class="nav-link">
+                <i class="contract bi bi-journal"></i>
+                <p>
+                  Danh mục hợp đồng
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=install&action=index" class="nav-link">
+                <i class="new bi bi-gear-wide-connected"></i>
+                <p>
+                  Hồ sơ lắp đặt mới
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=relocation&action=index" class="nav-link">
+                <i class="go bi bi-box-seam"></i>
+                  <p>
+                    Hồ sơ di dời
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=repair&action=index" class="nav-link">
+                <i class="tools bi bi-tools"></i>
+                  <p>
+                    Hồ sơ sửa chữa
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="index.php?controller=unuse&action=index" class="nav-link">
+              <i class="cut bi bi-scissors"></i>
               <p>
                 Ngưng sử dụng
               </p>
-            </a>
-          </li>
+              </a>
+            </li>
+            </ul>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->

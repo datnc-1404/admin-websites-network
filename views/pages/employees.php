@@ -23,6 +23,17 @@ if (!isset($_SESSION['username'])) {
   <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
   <!-- Theme style -->
   <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- bootstrap jquery -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- datatable  -->
+  <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.css">
+  <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.10.19/js/jquery.dataTables.js"></script>
+  <!-- css jquery -->
+  <link rel="stylesheet" href="../websites/assets/dist/css/adminltetable.css">
+  <script type="text/javascript" src="websites/assets/dist/js/employdatatables.js"></script>
 </head>
 <!--
 `body` tag options:
@@ -191,7 +202,7 @@ if (!isset($_SESSION['username'])) {
         <div class="info">
             <div class="row">
             <a href="#" class="d-block col"><?php echo $_SESSION['username'];?></a>
-            <a href="#" class="d-block col">Đăng xuất</a>
+            <a href="login.php" class="d-block col">Đăng xuất</a>
             </div>
         </div>
       </div>
@@ -222,71 +233,83 @@ if (!isset($_SESSION['username'])) {
               </p>
             </a>
             <ul class="nav nav-treeview">
-
               <li class="nav-item">
-                <a href="index.php?controller=pages&action=dashboard" class="nav-link">
-                  <i class="far fa-circle nav-icon"></i>
+                <a href="index.php?controller=pages&action=dashboard" class="nav-link active">
+                <i class="manage bi bi-list"></i>
                   <p>Quản lý chung</p>
                 </a>
               </li>
             </ul>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=employees&action=index" class="nav-link active">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh sách nhân viên
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=customers&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh sách khách hàng
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=contracts&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Danh mục hợp đồng
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=install&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ lắp đặt mới
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=relocation&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ di dời
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=repair&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
-              <p>
-                Hồ sơ sửa chữa
-              </p>
-            </a>
-          </li>
-          <li class="nav-item">
-            <a href="index.php?controller=unuse&action=index" class="nav-link">
-              <i class="nav-icon fas fa-th"></i>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=employees&action=index" class="nav-link">
+                <i class="staff bi bi-person-fill"></i>
+                <p>
+                  Danh sách nhân viên
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=customers&action=index" class="nav-link">
+                <i class="guest bi bi-people-fill"></i>
+                <p>
+                  Danh sách khách hàng
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=contracts&action=index" class="nav-link">
+                <i class="contract bi bi-journal"></i>
+                <p>
+                  Danh mục hợp đồng
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=install&action=index" class="nav-link">
+                <i class="new bi bi-gear-wide-connected"></i>
+                <p>
+                  Hồ sơ lắp đặt mới
+                </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=relocation&action=index" class="nav-link">
+                <i class="go bi bi-box-seam"></i>
+                  <p>
+                    Hồ sơ di dời
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+                <a href="index.php?controller=repair&action=index" class="nav-link">
+                <i class="tools bi bi-tools"></i>
+                  <p>
+                    Hồ sơ sửa chữa
+                  </p>
+                </a>
+              </li>
+            </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="index.php?controller=unuse&action=index" class="nav-link">
+              <i class="cut bi bi-scissors"></i>
               <p>
                 Ngưng sử dụng
               </p>
-            </a>
-          </li>
+              </a>
+            </li>
+            </ul>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -296,7 +319,33 @@ if (!isset($_SESSION['username'])) {
 
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
-    <?php echo "Đây là nhân viên"?>
+    <form action="#" mothod="POST">
+      <h1 class="display-4 my-4 text-info">DANH SÁCH NHÂN VIÊN</h1>
+        <table class="table table-striped" id="list" style="width:100%;">
+          <thead>
+            <tr id="list-header">
+              <th scope="col">STT</td>
+              <th scope="col">Mã Nhân Viên</th>
+              <th scope="col">Tên Nhân Viên</th>
+              <th scope="col">Ngày Sinh</th>
+              <th scope="col">Địa Chỉ</th>
+              <th scope="col">Chức Vụ</th>
+              <th scope="col">ID_TK</th>
+            </tr>
+          </thead>
+        <tbody>
+        <!-- <tr>
+          <td>1</td>
+          <td>1</td>
+          <td>Nguyễn Minh K</td>
+          <td>25/06/1995</td>
+          <td>32, Nguyễn Huệ, Vĩnh Long</td>
+          <td>Nhân viên lắp đặt</td>
+          <td>2</td>
+        </tr> -->
+        </tbody>
+      </table>
+    </form>
     <!-- /.content -->
   </div>
   <!-- /.content-wrapper -->
