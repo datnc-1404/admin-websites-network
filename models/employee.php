@@ -42,10 +42,9 @@ class Employee {
         return $stmt->rowCount() > 0;
     }
 
-    static function add($MaNV, $TenNV, $NS, $DC, $CV, $ID_TK) {
+    static function add($TenNV, $NS, $DC, $CV, $ID_TK) {
         $db = DB::getInstance();
-        $stmt = $db->prepare('INSERT INTO nhanvien (MaNV, TenNV, NS, DC, CV, ID_TK) VALUES (:MaNV, :TenNV, :NS, :DC, :CV, :ID_TK)');
-        $stmt->bindValue(':MaNV', $MaNV);
+        $stmt = $db->prepare('INSERT INTO nhanvien (TenNV, NS, DC, CV, ID_TK) VALUES (:TenNV, :NS, :DC, :CV, :ID_TK)');
         $stmt->bindValue(':TenNV', $TenNV);
         $stmt->bindValue(':NS', $NS);
         $stmt->bindValue(':DC', $DC);
@@ -54,11 +53,58 @@ class Employee {
     
         // Thực thi câu lệnh SQL và kiểm tra kết quả
         if ($stmt->execute()) {
-            // Trả về true nếu thêm dữ liệu thành công
-            return true;
+            // Trả về true nếu số hàng bị ảnh hưởng > 0, cho biết dữ liệu đã được thêm thành công
+            return $stmt->rowCount() > 0;
         } else {
             // Trả về false nếu có lỗi xảy ra
             return false;
         }
     }
+    
+    static function getEmployeeById($id) {
+        // Kết nối đến cơ sở dữ liệu
+        $db = DB::getInstance();
+    
+        // Chuẩn bị câu truy vấn SQL để lấy thông tin của nhân viên theo ID
+        $stmt = $db->prepare('SELECT * FROM nhanvien WHERE MaNV = :id');
+        $stmt->execute(array(':id' => $id));
+    
+        // Lấy thông tin nhân viên từ kết quả truy vấn
+        $employee = $stmt->fetch(PDO::FETCH_ASSOC);
+    
+        // Trả về thông tin nhân viên (hoặc null nếu không tìm thấy)
+        return $employee;
+    }
+
+    static function update($MaNV, $TenNV, $NS, $DC, $CV, $ID_TK) {
+        try {
+            // Kết nối đến cơ sở dữ liệu
+            $db = DB::getInstance();
+    
+            // Chuẩn bị câu truy vấn SQL để cập nhật thông tin của nhân viên
+            $stmt = $db->prepare('UPDATE nhanvien SET TenNV = :TenNV, NS = :NS, DC = :DC, CV = :CV, ID_TK = :ID_TK WHERE MaNV = :MaNV');
+            $stmt->execute(array(
+                ':MaNV' => $MaNV,
+                ':TenNV' => $TenNV,
+                ':NS' => $NS,
+                ':DC' => $DC,
+                ':CV' => $CV,
+                ':ID_TK' => $ID_TK
+            ));
+    
+            // Kiểm tra số dòng bị ảnh hưởng, nếu không có dòng nào bị ảnh hưởng, có thể xảy ra lỗi
+            if ($stmt->rowCount() === 0) {
+                throw new Exception("Không có nhân viên nào được cập nhật.");
+            }
+    
+            // Trả về true nếu cập nhật thành công
+            return true;
+        } catch (Exception $e) {
+            // Trả về false và thông báo lỗi
+            return false;
+        }
+    }
+    
+    
+    
 }   

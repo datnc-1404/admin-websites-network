@@ -311,7 +311,7 @@ if (!isset($_SESSION['username'])) {
               <a href="index.php?controller=ggmap&action=index" class="nav-link">
               <i class="bi bi-geo-alt"></i>
               <p>
-                Google Map
+              Bản đồ phân bố lắp đặt
               </p>
               </a>
             </li>

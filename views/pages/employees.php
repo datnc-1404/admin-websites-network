@@ -324,7 +324,7 @@ if (!isset($_SESSION['username'])) {
               <a href="index.php?controller=ggmap&action=index" class="nav-link">
               <i class="bi bi-geo-alt"></i>
               <p>
-                Google Map
+              Bản đồ phân bố lắp đặt
               </p>
               </a>
             </li>
@@ -350,11 +350,9 @@ if (!isset($_SESSION['username'])) {
                   <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
                   <li class="breadcrumb-item active">Nhân viên</li>
                 </ol>
-              </div><!-- /.col -->
-              <div class="btn_them">
-                <a href="index.php?controller=employees&action=index">
-                    <button>Thêm nhân viên</button>
-                </a>
+              </div><!-- /.col -->          
+              <div class="col-sm-12 justify-content-end">
+                <button type="button" class="btn btn-add btn-info float-sm-right">+ Thêm nhân viên</button>
               </div>
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
@@ -400,6 +398,99 @@ if (!isset($_SESSION['username'])) {
   </footer>
 </div>
 <!-- ./wrapper -->
+<!-- Modal -->
+<div class="modal fade" id="addEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="addEmployeeModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeModalLabel">Thêm nhân viên</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <!-- Form để nhập thông tin nhân viên -->
+                <form id="addEmployeeForm">
+                    <div class="form-group">
+                        <label for="employeeName">Tên nhân viên</label>
+                        <input type="text" class="form-control" id="employeeName" name="employeeName">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeDOB">Ngày sinh</label>
+                        <input type="date" class="form-control" id="employeeDOB" name="employeeDOB">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeAddress">Địa chỉ</label>
+                        <input type="text" class="form-control" id="employeeAddress" name="employeeAddress">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeePosition">Chức vụ</label>
+                        <input type="text" class="form-control" id="employeePosition" name="employeePosition">
+                    </div>
+                    <div class="form-group">
+                        <label for="employeeID_TK">ID_TK</label>
+                        <select class="form-control" id="employeeID_TK" name="employeeID_TK">
+                            <!-- Options sẽ được tạo bằng JavaScript hoặc được gửi từ server -->
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+                <button type="button" class="btn btn-primary" id="btnAddEmployee">Thêm</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal cập nhật nhân viên -->
+<div class="modal fade" id="updateEmployeeModal" tabindex="-1" role="dialog" aria-labelledby="updateEmployeeModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updateEmployeeModalLabel">Cập nhật nhân viên</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <!-- Form cập nhật nhân viên -->
+        <form id="updateEmployeeForm">
+          <div class="form-group">
+            <label for="employeeID">ID</label>
+            <input type="text" class="form-control" id="UDemployeeID" name="employeeID" readonly>
+          </div>
+          <div class="form-group">
+            <label for="employeeName">Tên nhân viên</label>
+            <input type="text" class="form-control" id="UDemployeeName" name="employeeName">
+          </div>
+          <div class="form-group">
+            <label for="employeeDOB">Ngày sinh</label>
+            <input type="date" class="form-control" id="UDemployeeDOB" name="employeeDOB">
+          </div>
+          <div class="form-group">
+            <label for="employeeAddress">Địa chỉ</label>
+            <input type="text" class="form-control" id="UDemployeeAddress" name="employeeAddress">
+          </div>
+          <div class="form-group">
+            <label for="employeePosition">Chức vụ</label>
+            <input type="text" class="form-control" id="UDemployeePosition" name="employeePosition">
+          </div>
+          <div class="form-group">
+            <label for="employeeID_TK">ID_TK</label>
+            <select class="form-control" id="UDemployeeID_TK" name="employeeID_TK">
+              <!-- Các tùy chọn sẽ được thêm sau bằng JavaScript hoặc gửi từ máy chủ -->
+            </select>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Đóng</button>
+        <button type="button" class="btn btn-primary" id="btnUpdateEmployee">Lưu thay đổi</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 <!-- REQUIRED SCRIPTS -->
 
@@ -450,7 +541,7 @@ if (!isset($_SESSION['username'])) {
                                    <i class="fas fa-ellipsis-h"></i>
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Cập nhật</a>
+                                    <a class="dropdown-item btn-update" data-id="`+ data.id +`" href="#">Cập nhật</a>
                                     <a class="dropdown-item btn-delete" data-id="`+ data.id +`" href="#">Xóa</a>
                                 </div>
                             </div>
@@ -461,6 +552,117 @@ if (!isset($_SESSION['username'])) {
             }
           ]
         });
+          // Hiển thị modal thêm nhân viên
+          $(".btn-add").click(function(){
+            // Dữ liệu tài khoản ví dụ
+              var accountData = [
+                  { id: 1, name: "Tài khoản 1" },
+                  { id: 2, name: "Tài khoản 2" },
+                  { id: 3, name: "Tài khoản 3" }
+              ];
+
+              // Lặp qua dữ liệu tài khoản và tạo các tùy chọn
+              for (var i = 0; i < accountData.length; i++) {
+                  var option = document.createElement("option");
+                  option.value = accountData[i].id;
+                  option.text = accountData[i].name;
+                  document.getElementById("employeeID_TK").appendChild(option);
+              }
+
+              $("#addEmployeeModal").modal("show");
+          });
+         // Xử lý sự kiện khi nhấn nút Thêm nhân viên
+          $("#btnAddEmployee").click(function(){
+              // Lấy dữ liệu từ form
+              var employeeData = $("#addEmployeeForm").serialize();
+
+              // // Gửi dữ liệu qua AJAX
+              $.ajax({
+                  url: "index.php?controller=employees&action=addEmployee", // Đường dẫn tới file xử lý thêm nhân viên
+                  type: "POST",
+                  data: employeeData,
+                  success: function(response){
+                      // Parse JSON response
+                      var data = JSON.parse(response);
+                      $('#addEmployeeModal').modal('hide');
+                      // Kiểm tra xem có lỗi không
+                      if (data.success) {
+                          // Hiển thị SweetAlert2 thành công
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Thành công!',
+                              text: data.message,
+                              timer: 1000, // Thời gian đóng modal, đơn vị là milliseconds (ở đây là 2 giây)
+                              showConfirmButton: false // Ẩn nút OK
+                          });
+                          dataTable.ajax.reload();
+                      } else {
+                          // Hiển thị SweetAlert2 báo lỗi
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Lỗi!',
+                              text: data.message
+                          });
+                      }
+                  },
+                  error: function(xhr, status, error){
+                      // Xử lý lỗi khi thêm nhân viên không thành công
+                      // Hiển thị SweetAlert2 báo lỗi
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Lỗi!',
+                          text: 'Có lỗi xảy ra khi thêm nhân viên.'
+                      });
+                  }
+              });
+          });
+
+          // Sự kiện click cho nút "Lưu thay đổi cập nhật dữ liệu nhân viên"
+          $("#btnUpdateEmployee").click(function(){
+              // Lấy dữ liệu từ form
+              var employeeData = $("#updateEmployeeForm").serialize();
+
+              // Gửi dữ liệu qua AJAX
+              $.ajax({
+                  url: "index.php?controller=employees&action=updateEmployee", // Đường dẫn tới file xử lý cập nhật nhân viên
+                  type: "POST",
+                  data: employeeData,
+                  success: function(response){
+                      // Parse dữ liệu JSON nhận được từ server
+                      var data = JSON.parse(response);
+                      $('#updateEmployeeModal').modal('hide');
+                      // Hiển thị thông báo kết quả từ server (thành công hoặc thất bại)
+                      if(data.success) {
+                          // Hiển thị thông báo thành công
+                          Swal.fire({
+                              icon: 'success',
+                              title: 'Thành công!',
+                              text: data.message,
+                              timer: 1000, // Thời gian đóng modal, đơn vị là milliseconds (ở đây là 2 giây)
+                              showConfirmButton: false // Ẩn nút OK
+                          });
+                          dataTable.ajax.reload();
+                      } else {
+                          // Hiển thị thông báo lỗi
+                          Swal.fire({
+                              icon: 'error',
+                              title: 'Lỗi!',
+                              text: data.message
+                          });
+                      }
+                  },
+                  error: function(xhr, status, error){
+                      // Xử lý lỗi khi gọi AJAX
+                      console.error("Error:", error);
+                      // Hiển thị thông báo lỗi
+                      Swal.fire({
+                          icon: 'error',
+                          title: 'Lỗi!',
+                          text: 'Đã xảy ra lỗi khi cập nhật nhân viên.'
+                      });
+                  }
+              });
+          });
     });
     // Bắt sự kiện click trên các mục dropdown-item
     $(document).on('click', '.dropdown-item.btn-delete', function(e) {
@@ -489,7 +691,51 @@ if (!isset($_SESSION['username'])) {
             }
         });
     });
+    // Đổ dữ liệu để update
+    $(document).on("click", ".btn-update", function(e){
+        e.preventDefault(); // Ngăn chặn hành vi mặc định của thẻ a
 
+        // Lấy ID của nhân viên từ thuộc tính data-id
+        var id = $(this).data("id");
+
+        // Gửi yêu cầu AJAX để lấy thông tin của nhân viên dựa trên ID
+        $.ajax({
+            url: "index.php?controller=employees&action=getEmployeeById", // Đường dẫn tới file xử lý lấy thông tin nhân viên
+            type: "POST",
+            data: { id: id },
+            success: function(response){
+                // Parse dữ liệu JSON nhận được từ server
+                var data = JSON.parse(response);
+                // Hiển thị dữ liệu của nhân viên trong modal
+                $("#UDemployeeID").val(data['employee'].MaNV);
+                $("#UDemployeeName").val(data['employee'].TenNV);
+                $("#UDemployeeDOB").val(data['employee'].NS);
+                $("#UDemployeeAddress").val(data['employee'].DC);
+                $("#UDemployeePosition").val(data['employee'].CV);
+                $("#UDemployeeID_TK").val(data['employee'].ID_TK);
+
+                var accountData = [
+                  { id: 1, name: "Tài khoản 1" },
+                  { id: 2, name: "Tài khoản 2" },
+                  { id: 3, name: "Tài khoản 3" }
+                ];
+
+                // Lặp qua dữ liệu tài khoản và tạo các tùy chọn
+                for (var i = 0; i < accountData.length; i++) {
+                    var option = document.createElement("option");
+                    option.value = accountData[i].id;
+                    option.text = accountData[i].name;
+                    document.getElementById("UDemployeeID_TK").appendChild(option);
+                }
+                // Hiển thị modal cập nhật
+                $("#updateEmployeeModal").modal("show");
+            },
+            error: function(xhr, status, error){
+                // Xử lý lỗi khi không thể lấy dữ liệu nhân viên
+                console.error("Error:", error);
+            }
+        });
+    });
     // Hàm thực hiện xóa dữ liệu bằng AJAX
     // Hàm thực hiện xóa dữ liệu bằng AJAX
 function deleteData(id) {

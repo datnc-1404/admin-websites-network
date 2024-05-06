@@ -2,7 +2,7 @@
 $controllers = array(
   'pages' => ['home', 'error', 'login', 'dashboard', 'logout'],
   'posts' => ['index'],
-  'employees' => ['index', 'getEmployeeList', 'deleteEmployeeById','addEmployee'],
+  'employees' => ['index', 'getEmployeeList', 'deleteEmployeeById','addEmployee', 'getEmployeeById', 'updateEmployee'],
   'customers' => ['index', 'getCustomerList','deleteCustomerById'],
   'contracts' => ['index', 'getContractList','deleteContractById'],
   'relocation' => ['index', 'getRelocationList','deleteRelocationById'],
