@@ -306,6 +306,16 @@ if (!isset($_SESSION['username'])) {
               </a>
             </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="index.php?controller=ggmap&action=index" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <p>
+                Google Map
+              </p>
+              </a>
+            </li>
+            </ul>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -320,7 +330,7 @@ if (!isset($_SESSION['username'])) {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Hồ sơ sửa chữa</h1>
+                <h1 class="m-0">HỒ SƠ SỬA CHỮA</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -337,12 +347,14 @@ if (!isset($_SESSION['username'])) {
         <table id="contractTable" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>Ma DD</th>
-                    <th>Noi DD Den</th>
-                    <th>MaHD</th>
-                    <th>MaKH</th>
-                    <th>MaNV</th>
-                    <th>Duyet</th>
+                    <th>Mã sửa chữa</th>
+                    <th>Tên sự cố</th>
+                    <th>Ngày lập hồ sơ</th>
+                    <th>Ngày sửa chữa</th>
+                    <th>Mã hợp đồng</th>
+                    <th>Mã khách hàng</th>
+                    <th>Mã nhân viên</th>
+                    <th>Duyệt</th>
                     <th>Thao tác</th>
                 </tr>
             </thead>
@@ -389,12 +401,36 @@ if (!isset($_SESSION['username'])) {
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.min.js"></script>
 <script>
+
+    var dataTable;
     $(document).ready(function () {
-        $('#contractTable').DataTable({
-          ajax: 'index.php?controller=relocation&action=getRelocationList',
+          dataTable= $('#contractTable').DataTable({
+          ajax: 'index.php?controller=repair&action=getRepairList',
           columns: [ 
             { data: 'id' },
-            { data: 'location' },
+            { data: 'name_error' },
+            {
+              data:'date_founded',
+              render: function(data, type, row) {
+                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
+                        // Chuyển định dạng ngày tháng
+                        var parts = data.split('-');
+                        return parts[2] + '-' + parts[1] + '-' + parts[0];
+                    }
+                    return data;
+                }
+            },
+            {
+              data:'date_repair',
+              render: function(data, type, row) {
+                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
+                        // Chuyển định dạng ngày tháng
+                        var parts = data.split('-');
+                        return parts[2] + '-' + parts[1] + '-' + parts[0];
+                    }
+                    return data;
+                }
+            },
             { data: 'id_contract'},
             { data: 'id_customer' },
             { data: 'id_employee' },
@@ -410,7 +446,7 @@ if (!isset($_SESSION['username'])) {
                                 </button>
                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <a class="dropdown-item" href="#">Cập nhật</a>
-                                    <a class="dropdown-item" href="#">Xóa</a>
+                                    <a class="dropdown-item btn-delete" data-id="`+ data.id +`" href="#">Xóa</a>
                                 </div>
                             </div>
                         `;
@@ -422,6 +458,75 @@ if (!isset($_SESSION['username'])) {
           ]
         });
     });
+
+    // Bắt sự kiện click trên các mục dropdown-item
+    $(document).on('click', '.dropdown-item.btn-delete', function(e) {
+        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
+
+        // Lấy giá trị của thuộc tính data-id từ phần tử <a> được click
+        var id = $(this).data('id');
+    
+        // Kiểm tra xem id đã được lấy chưa (để debug, có thể in ra console)
+        console.log('ID của dữ liệu cần xóa:', id);
+
+         // Hiển thị hộp thoại xác nhận xóa sử dụng SweetAlert2
+        Swal.fire({
+            title: 'Bạn chắc chắn muốn xóa?',
+            text: "Hành động này sẽ xóa dữ liệu vĩnh viễn!",
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Đồng ý',
+            cancelButtonText: 'Hủy bỏ'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // Nếu người dùng xác nhận xóa, gọi hàm deleteData để xóa bằng AJAX
+                deleteData(id);
+            }
+        });
+    });
+
+    // Hàm thực hiện xóa dữ liệu bằng AJAX
+function deleteData(id) {
+    // Gửi yêu cầu xóa bằng AJAX
+    $.ajax({
+        url: 'index.php?controller=repair&action=deleteRepairById',
+        type: 'POST',
+        data: { id: id },
+        success: function(response) {
+            // Phân tích kết quả trả về từ server
+            var data = JSON.parse(response);
+            if (data.success) {
+                // Nếu xóa thành công, hiển thị thông báo thành công bằng SweetAlert2
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Thành công!',
+                    text: data.message,
+                });
+                // Tải lại dữ liệu DataTables sau khi xóa thành công
+                dataTable.ajax.reload();
+            } else {
+                // Nếu xóa không thành công, hiển thị thông báo lỗi bằng SweetAlert2
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Lỗi!',
+                    text: data.message,
+                });
+            }
+        },
+        error: function(xhr, status, error) {
+            // Xử lý lỗi
+            console.error('Lỗi xóa:', error);
+            // Hiển thị thông báo lỗi cho người dùng (nếu cần)
+            Swal.fire({
+                icon: 'error',
+                title: 'Lỗi!',
+                text: 'Đã xảy ra lỗi khi xóa nhân viên.',
+            });
+        }
+    });
+}
 </script>
 </body>
 </html>

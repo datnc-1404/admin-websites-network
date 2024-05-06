@@ -6,41 +6,32 @@ if (!isset($_SESSION['username'])) {
     header('Location: index.php?controller=pages&action=login');
     exit;
 }
-
 ?>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Quản trị | Admin</title>
 
-  <!-- Google Font: Source Sans Pro -->
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
-  <!-- Font Awesome Icons -->
-  <link rel="stylesheet" href="../websites/assets/plugins/fontawesome-free/css/all.min.css">
-  <!-- IonIcons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
-  <!-- datatable  -->
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css">
-  <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.semanticui.min.css">
-</head>
-<!-- Custom CSS for Dropdown Button -->
-<style>
-        /* Remove the arrow from the dropdown button */
-        .dropdown-toggle::after {
-            display: none;
-        }
-        
-        /* Style the button with padding */
-        .dropdown-toggle {
-            padding: 0.375rem 0.75rem;
+<!DOCTYPE html>
+<html>
+<head>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <style>
+        #osm-map {
+            height: 700px;
+            width: 100%;
         }
     </style>
-<body class="hold-transition sidebar-mini">
+    <!-- Google Font: Source Sans Pro -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700&display=fallback">
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="../websites/assets/plugins/fontawesome-free/css/all.min.css">
+    <!-- IonIcons -->
+    <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
+    <!-- Theme style -->
+    <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- datatable  -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css">
+    <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.semanticui.min.css">
+</head>
+<body>
 <div class="wrapper">
   <!-- Navbar -->
   <nav class="main-header navbar navbar-expand navbar-white navbar-light">
@@ -221,7 +212,7 @@ if (!isset($_SESSION['username'])) {
           <!-- Add icons to the links using the .nav-icon class
                with font-awesome or any other icon font library -->
           <li class="nav-item menu-open">
-            <a href="#" class="nav-link">
+            <a href="#" class="nav-link ">
               <i class="nav-icon fas fa-tachometer-alt"></i>
               <p>
                 Dashboard
@@ -278,7 +269,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=relocation&action=index" class="nav-link active">
+                <a href="index.php?controller=relocation&action=index" class="nav-link">
                 <i class="go bi bi-box-seam"></i>
                   <p>
                     Hồ sơ di dời
@@ -308,7 +299,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-              <a href="index.php?controller=ggmap&action=index" class="nav-link">
+              <a href="index.php?controller=ggmap&action=index" class="nav-link active">
               <i class="bi bi-geo-alt"></i>
               <p>
                 Google Map
@@ -323,210 +314,41 @@ if (!isset($_SESSION['username'])) {
     <!-- /.sidebar -->
   </aside>
 
-  <!-- Content Wrapper. Contains page content -->
-  <div class="content-wrapper">
-        <!-- Content Header (Page header) -->
-        <div class="content-header">
-          <div class="container-fluid">
-            <div class="row mb-2">
-              <div class="col-sm-6">
-                <h1 class="m-0">Hồ sơ lắp đặt mới</h1>
-              </div><!-- /.col -->
-              <div class="col-sm-6">
-                <ol class="breadcrumb float-sm-right">
-                  <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Hồ sơ lắp đặt mới</li>
-                </ol>
-              </div><!-- /.col -->
-            </div><!-- /.row -->
-          </div><!-- /.container-fluid -->
-        </div>
-        <!-- /.content-header -->
+  <!-- jQuery -->
+  <script src="../websites/assets/plugins/jquery/jquery.min.js"></script>
+  <!-- AdminLTE -->
+  <script src="../websites/assets/dist/js/adminlte.js"></script>
 
-        <div class="content">
-        <table id="contractTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Mã di dời</th>
-                    <th>Nơi di dời đến</th>
-                    <th>Ngày lập hồ sơ</th>
-                    <th>Ngày di dời</th>
-                    <th>Mã hợp đồng</th>
-                    <th>Mã khách hàng</th>
-                    <th>Mã nhân viên</th>
-                    <th>Duyệt</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dữ liệu sẽ được load ở đây -->
-            </tbody>
-        </table>
-        </div>
-  </div>
-  <!-- /.content-wrapper -->
+  <!----------------- Bản đồ --------------------->
+    <div id="osm-map"></div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script>
+        // Tạo bản đồ và đặt tọa độ trung tâm và mức phóng to
+        var map = L.map('osm-map').setView([10.0306, 105.7851], 9);
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Control sidebar content goes here -->
-  </aside>
-  <!-- /.control-sidebar -->
+        // Thêm lớp title OSM vào bản đồ
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
 
-  <!-- Main Footer -->
-  <footer class="main-footer">
-    <strong>Copyright &copy; 2014-2021 <a href="https://adminlte.io">AdminLTE.io</a>.</strong>
-    All rights reserved.
-    <div class="float-right d-none d-sm-inline-block">
-      <b>Version</b> 3.2.0
-    </div>
-  </footer>
-</div>
-<!-- ./wrapper -->
+        // Danh sách các địa điểm
+        var locations = [
+            { title: 'Vĩnh Long', location: { lat: 10.0306, lng: 105.7851 }, color: 'red' },
+            { title: 'Bến Tre', location: { lat: 10.2415, lng: 106.3754 }, color: 'green' },
+            { title: 'Trà Vinh', location: { lat: 9.9347, lng: 106.3459 }, color: 'blue' },
+            { title: 'Cần Thơ', location: { lat: 10.0452, lng: 105.7469 }, color: 'orange' }
+        ];
 
-<!-- REQUIRED SCRIPTS -->
-
-<!-- jQuery -->
-<script src="../websites/assets/plugins/jquery/jquery.min.js"></script>
-<!-- Bootstrap -->
-<script src="../websites/assets/plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
-<!-- AdminLTE -->
-<script src="../websites/assets/dist/js/adminlte.js"></script>
-
-<!-- OPTIONAL SCRIPTS -->
-<script src="../websites/assets/plugins/chart.js/Chart.min.js"></script>
-<!-- AdminLTE for demo purposes -->
-<script src="../websites/assets/dist/js/demo.js"></script>
-<!-- AdminLTE dashboard demo (This is only for demo purposes) -->
-<script src="../websites/assets/dist/js/pages/dashboard3.js"></script>
-<script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
-<script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.min.js"></script>
-<script>
-
-  var dataTable;
-    $(document).ready(function () {
-        dataTable= $('#contractTable').DataTable({
-          ajax: 'index.php?controller=relocation&action=getRelocationList',
-          columns: [ 
-            { data: 'id' },
-            { data: 'location' },
-            { 
-              data: 'date_founded',
-              render: function(data, type, row) {
-                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
-                        // Chuyển định dạng ngày tháng
-                        var parts = data.split('-');
-                        return parts[2] + '-' + parts[1] + '-' + parts[0];
-                    }
-                    return data;
-                }
-            },
-            { 
-              data: 'date_relocation',
-              render: function(data, type, row) {
-                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
-                        // Chuyển định dạng ngày tháng
-                        var parts = data.split('-');
-                        return parts[2] + '-' + parts[1] + '-' + parts[0];
-                    }
-                    return data;
-                }
-            },
-            { data: 'id_contract'},
-            { data: 'id_customer' },
-            { data: 'id_employee' },
-            { data: 'status' },
-            { 
-              data : null ,
-              render: function(data, type, row) {
-                    if (type === 'display') {
-                        return `
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   <i class="fas fa-ellipsis-h"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Cập nhật</a>
-                                    <a class="dropdown-item btn-delete" data-id="`+ data.id +`" href="#">Xóa</a>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    return data;
-                }
-            }
-        
-          ]
+        // Hiển thị các vị trí và biểu tượng
+        locations.forEach(function (place) {
+            var marker = L.circleMarker([place.location.lat, place.location.lng], {
+                color: place.color,
+                fillColor: place.color,
+                fillOpacity: 0.8,
+                radius: 8
+            }).addTo(map);
+            marker.bindPopup(place.title);
         });
-    });
-
-    // Bắt sự kiện click trên các mục dropdown-item
-    $(document).on('click', '.dropdown-item.btn-delete', function(e) {
-        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-
-        // Lấy giá trị của thuộc tính data-id từ phần tử <a> được click
-        var id = $(this).data('id');
-    
-        // Kiểm tra xem id đã được lấy chưa (để debug, có thể in ra console)
-        console.log('ID của dữ liệu cần xóa:', id);
-
-         // Hiển thị hộp thoại xác nhận xóa sử dụng SweetAlert2
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn xóa?',
-            text: "Hành động này sẽ xóa dữ liệu vĩnh viễn!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy bỏ'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Nếu người dùng xác nhận xóa, gọi hàm deleteData để xóa bằng AJAX
-                deleteData(id);
-            }
-        });
-    });
-
-    // Hàm thực hiện xóa dữ liệu bằng AJAX
-function deleteData(id) {
-    // Gửi yêu cầu xóa bằng AJAX
-    $.ajax({
-        url: 'index.php?controller=relocation&action=deleteRelocationById',
-        type: 'POST',
-        data: { id: id },
-        success: function(response) {
-            // Phân tích kết quả trả về từ server
-            var data = JSON.parse(response);
-            if (data.success) {
-                // Nếu xóa thành công, hiển thị thông báo thành công bằng SweetAlert2
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: data.message,
-                });
-                // Tải lại dữ liệu DataTables sau khi xóa thành công
-                dataTable.ajax.reload();
-            } else {
-                // Nếu xóa không thành công, hiển thị thông báo lỗi bằng SweetAlert2
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: data.message,
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            // Xử lý lỗi
-            console.error('Lỗi xóa:', error);
-            // Hiển thị thông báo lỗi cho người dùng (nếu cần)
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: 'Đã xảy ra lỗi khi xóa nhân viên.',
-            });
-        }
-    });
-}
-</script>
+    </script>
 </body>
 </html>

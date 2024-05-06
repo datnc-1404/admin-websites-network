@@ -319,6 +319,16 @@ if (!isset($_SESSION['username'])) {
               </a>
             </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="index.php?controller=ggmap&action=index" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <p>
+                Google Map
+              </p>
+              </a>
+            </li>
+            </ul>
         </ul>
       </nav>
       <!-- /.sidebar-menu -->
@@ -333,7 +343,7 @@ if (!isset($_SESSION['username'])) {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Nhân viên</h1>
+                <h1 class="m-0">DANH SÁCH NHÂN VIÊN</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
@@ -341,6 +351,11 @@ if (!isset($_SESSION['username'])) {
                   <li class="breadcrumb-item active">Nhân viên</li>
                 </ol>
               </div><!-- /.col -->
+              <div class="btn_them">
+                <a href="index.php?controller=employees&action=index">
+                    <button>Thêm nhân viên</button>
+                </a>
+              </div>
             </div><!-- /.row -->
           </div><!-- /.container-fluid -->
         </div>
@@ -350,11 +365,11 @@ if (!isset($_SESSION['username'])) {
         <table id="employeeTable" class="table table-striped table-bordered" style="width:100%">
             <thead>
                 <tr>
-                    <th>MaNV</th>
-                    <th>TenNV</th>
-                    <th>NS</th>
-                    <th>DC</th>
-                    <th>CV</th>
+                    <th>Mã nhân viên</th>
+                    <th>Tên nhân viên</th>
+                    <th>Ngày sinh</th>
+                    <th>Địa chỉ</th>
+                    <th>Chức vụ</th>
                     <th>ID_TK</th>
                     <th>Thao tác</th>
                 </tr>
@@ -411,7 +426,17 @@ if (!isset($_SESSION['username'])) {
           columns: [ 
             { data: 'id' },
             { data: 'name' },
-            { data: 'born_date' },
+            { 
+                data: 'born_date',
+                render: function(data, type, row) {
+                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
+                        // Chuyển định dạng ngày tháng
+                        var parts = data.split('-');
+                        return parts[2] + '-' + parts[1] + '-' + parts[0];
+                    }
+                    return data;
+                }
+            },
             { data: 'address' },
             { data: 'position' },
             { data: 'id_user' },

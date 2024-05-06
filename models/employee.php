@@ -42,4 +42,23 @@ class Employee {
         return $stmt->rowCount() > 0;
     }
 
+    static function add($MaNV, $TenNV, $NS, $DC, $CV, $ID_TK) {
+        $db = DB::getInstance();
+        $stmt = $db->prepare('INSERT INTO nhanvien (MaNV, TenNV, NS, DC, CV, ID_TK) VALUES (:MaNV, :TenNV, :NS, :DC, :CV, :ID_TK)');
+        $stmt->bindValue(':MaNV', $MaNV);
+        $stmt->bindValue(':TenNV', $TenNV);
+        $stmt->bindValue(':NS', $NS);
+        $stmt->bindValue(':DC', $DC);
+        $stmt->bindValue(':CV', $CV);
+        $stmt->bindValue(':ID_TK', $ID_TK);
+    
+        // Thực thi câu lệnh SQL và kiểm tra kết quả
+        if ($stmt->execute()) {
+            // Trả về true nếu thêm dữ liệu thành công
+            return true;
+        } else {
+            // Trả về false nếu có lỗi xảy ra
+            return false;
+        }
+    }
 }   

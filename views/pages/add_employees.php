@@ -6,7 +6,6 @@ if (!isset($_SESSION['username'])) {
     header('Location: index.php?controller=pages&action=login');
     exit;
 }
-
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -24,22 +23,16 @@ if (!isset($_SESSION['username'])) {
   <!-- Theme style -->
   <link rel="stylesheet" href="../websites/assets/dist/css/adminlte.min.css">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.0/font/bootstrap-icons.css" rel="stylesheet">
+  <!-- bootstrap jquery -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- datatable  -->
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.bootstrap5.min.css">
   <link rel="stylesheet" href="https://cdn.datatables.net/2.0.5/css/dataTables.semanticui.min.css">
+  
 </head>
-<!-- Custom CSS for Dropdown Button -->
-<style>
-        /* Remove the arrow from the dropdown button */
-        .dropdown-toggle::after {
-            display: none;
-        }
-        
-        /* Style the button with padding */
-        .dropdown-toggle {
-            padding: 0.375rem 0.75rem;
-        }
-    </style>
+
 <body class="hold-transition sidebar-mini">
 <div class="wrapper">
   <!-- Navbar -->
@@ -198,7 +191,7 @@ if (!isset($_SESSION['username'])) {
         <div class="info">
             <div class="row">
             <a href="#" class="d-block col"><?php echo $_SESSION['username'];?></a>
-            <a href="#" class="d-block col">Đăng xuất</a>
+            <a href="login.php" class="d-block col">Đăng xuất</a>
             </div>
         </div>
       </div>
@@ -230,7 +223,7 @@ if (!isset($_SESSION['username'])) {
             </a>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=pages&action=dashboard" class="nav-link ">
+                <a href="index.php?controller=pages&action=dashboard" class="nav-link">
                 <i class="manage bi bi-list"></i>
                   <p>Quản lý chung</p>
                 </a>
@@ -238,7 +231,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=employees&action=index" class="nav-link">
+                <a href="index.php?controller=employees&action=index" class="nav-link active">
                 <i class="staff bi bi-person-fill"></i>
                 <p>
                   Danh sách nhân viên
@@ -278,7 +271,7 @@ if (!isset($_SESSION['username'])) {
             </ul>
             <ul class="nav nav-treeview">
               <li class="nav-item">
-                <a href="index.php?controller=relocation&action=index" class="nav-link active">
+                <a href="index.php?controller=relocation&action=index" class="nav-link">
                 <i class="go bi bi-box-seam"></i>
                   <p>
                     Hồ sơ di dời
@@ -330,12 +323,12 @@ if (!isset($_SESSION['username'])) {
           <div class="container-fluid">
             <div class="row mb-2">
               <div class="col-sm-6">
-                <h1 class="m-0">Hồ sơ lắp đặt mới</h1>
+                <h1 class="m-0">DANH SÁCH NHÂN VIÊN</h1>
               </div><!-- /.col -->
               <div class="col-sm-6">
                 <ol class="breadcrumb float-sm-right">
                   <li class="breadcrumb-item"><a href="#">Trang chủ</a></li>
-                  <li class="breadcrumb-item active">Hồ sơ lắp đặt mới</li>
+                  <li class="breadcrumb-item active">Nhân viên</li>
                 </ol>
               </div><!-- /.col -->
             </div><!-- /.row -->
@@ -344,26 +337,32 @@ if (!isset($_SESSION['username'])) {
         <!-- /.content-header -->
 
         <div class="content">
-        <table id="contractTable" class="table table-striped table-bordered" style="width:100%">
-            <thead>
-                <tr>
-                    <th>Mã di dời</th>
-                    <th>Nơi di dời đến</th>
-                    <th>Ngày lập hồ sơ</th>
-                    <th>Ngày di dời</th>
-                    <th>Mã hợp đồng</th>
-                    <th>Mã khách hàng</th>
-                    <th>Mã nhân viên</th>
-                    <th>Duyệt</th>
-                    <th>Thao tác</th>
-                </tr>
-            </thead>
-            <tbody>
-                <!-- Dữ liệu sẽ được load ở đây -->
-            </tbody>
-        </table>
+            <form action="" method="POST">
+                <div name="name">
+                    <label for="">Tên nhân viên:</label>
+                    <input type="text" require holderplaceholder="Nhập tên nhân viên">
+                </div>
+                <div name="date">
+                    <label for="">Ngày sinh:</label>
+                    <input type="date" require holderplaceholder="Nhập ngày sinh">
+                </div>
+                <div name="address">
+                    <label for="">Địa chỉ:</label>
+                    <input type="text" require holderplaceholder="Nhập địa chỉ">
+                </div>
+                <div name="position">
+                    <label for="">Chức vụ:</label>
+                    <input type="text" require holderplaceholder="Nhập chức vụ">
+                </div>
+                <select name="ID_TK" required>
+                    <option value="" disabled selected>Chọn tài khoản</option>
+                    <option value="1">Tài khoản 1</option>
+                    <option value="2">Tài khoản 2</option>
+                </select>
+            </form>
         </div>
   </div>
+
   <!-- /.content-wrapper -->
 
   <!-- Control Sidebar -->
@@ -400,133 +399,6 @@ if (!isset($_SESSION['username'])) {
 <script src="../websites/assets/dist/js/pages/dashboard3.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.min.js"></script>
 <script src="https://cdn.datatables.net/2.0.5/js/dataTables.bootstrap5.min.js"></script>
-<script>
 
-  var dataTable;
-    $(document).ready(function () {
-        dataTable= $('#contractTable').DataTable({
-          ajax: 'index.php?controller=relocation&action=getRelocationList',
-          columns: [ 
-            { data: 'id' },
-            { data: 'location' },
-            { 
-              data: 'date_founded',
-              render: function(data, type, row) {
-                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
-                        // Chuyển định dạng ngày tháng
-                        var parts = data.split('-');
-                        return parts[2] + '-' + parts[1] + '-' + parts[0];
-                    }
-                    return data;
-                }
-            },
-            { 
-              data: 'date_relocation',
-              render: function(data, type, row) {
-                    if (type === 'display') {//kiểm tra xem có phải loại thao tác hiển thị hay ko
-                        // Chuyển định dạng ngày tháng
-                        var parts = data.split('-');
-                        return parts[2] + '-' + parts[1] + '-' + parts[0];
-                    }
-                    return data;
-                }
-            },
-            { data: 'id_contract'},
-            { data: 'id_customer' },
-            { data: 'id_employee' },
-            { data: 'status' },
-            { 
-              data : null ,
-              render: function(data, type, row) {
-                    if (type === 'display') {
-                        return `
-                            <div class="dropdown">
-                                <button class="btn dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                   <i class="fas fa-ellipsis-h"></i>
-                                </button>
-                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <a class="dropdown-item" href="#">Cập nhật</a>
-                                    <a class="dropdown-item btn-delete" data-id="`+ data.id +`" href="#">Xóa</a>
-                                </div>
-                            </div>
-                        `;
-                    }
-                    return data;
-                }
-            }
-        
-          ]
-        });
-    });
-
-    // Bắt sự kiện click trên các mục dropdown-item
-    $(document).on('click', '.dropdown-item.btn-delete', function(e) {
-        e.preventDefault(); // Ngăn chặn hành động mặc định của thẻ <a>
-
-        // Lấy giá trị của thuộc tính data-id từ phần tử <a> được click
-        var id = $(this).data('id');
-    
-        // Kiểm tra xem id đã được lấy chưa (để debug, có thể in ra console)
-        console.log('ID của dữ liệu cần xóa:', id);
-
-         // Hiển thị hộp thoại xác nhận xóa sử dụng SweetAlert2
-        Swal.fire({
-            title: 'Bạn chắc chắn muốn xóa?',
-            text: "Hành động này sẽ xóa dữ liệu vĩnh viễn!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Đồng ý',
-            cancelButtonText: 'Hủy bỏ'
-        }).then((result) => {
-            if (result.isConfirmed) {
-                // Nếu người dùng xác nhận xóa, gọi hàm deleteData để xóa bằng AJAX
-                deleteData(id);
-            }
-        });
-    });
-
-    // Hàm thực hiện xóa dữ liệu bằng AJAX
-function deleteData(id) {
-    // Gửi yêu cầu xóa bằng AJAX
-    $.ajax({
-        url: 'index.php?controller=relocation&action=deleteRelocationById',
-        type: 'POST',
-        data: { id: id },
-        success: function(response) {
-            // Phân tích kết quả trả về từ server
-            var data = JSON.parse(response);
-            if (data.success) {
-                // Nếu xóa thành công, hiển thị thông báo thành công bằng SweetAlert2
-                Swal.fire({
-                    icon: 'success',
-                    title: 'Thành công!',
-                    text: data.message,
-                });
-                // Tải lại dữ liệu DataTables sau khi xóa thành công
-                dataTable.ajax.reload();
-            } else {
-                // Nếu xóa không thành công, hiển thị thông báo lỗi bằng SweetAlert2
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Lỗi!',
-                    text: data.message,
-                });
-            }
-        },
-        error: function(xhr, status, error) {
-            // Xử lý lỗi
-            console.error('Lỗi xóa:', error);
-            // Hiển thị thông báo lỗi cho người dùng (nếu cần)
-            Swal.fire({
-                icon: 'error',
-                title: 'Lỗi!',
-                text: 'Đã xảy ra lỗi khi xóa nhân viên.',
-            });
-        }
-    });
-}
-</script>
 </body>
 </html>

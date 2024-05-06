@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>OpenStreetMap Demo</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" />
+    <style>
+        #osm-map {
+            height: 700px;
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="osm-map"></div>
+    <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+    <script>
+        // Tạo bản đồ và đặt tọa độ trung tâm và mức phóng to
+        var map = L.map('osm-map').setView([10.0306, 105.7851], 9);
+
+        // Thêm lớp tile OSM vào bản đồ
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+        }).addTo(map);
+
+        // Danh sách các địa điểm
+        var locations = [
+            { title: 'Vĩnh Long', location: { lat: 10.0306, lng: 105.7851 }, color: 'red' },
+            { title: 'Bến Tre', location: { lat: 10.2415, lng: 106.3754 }, color: 'green' },
+            { title: 'Trà Vinh', location: { lat: 9.9347, lng: 106.3459 }, color: 'blue' },
+            { title: 'Cần Thơ', location: { lat: 10.0452, lng: 105.7469 }, color: 'orange' }
+        ];
+
+        // Hiển thị các vị trí và biểu tượng
+        locations.forEach(function (place) {
+            var marker = L.circleMarker([place.location.lat, place.location.lng], {
+                color: place.color,
+                fillColor: place.color,
+                fillOpacity: 0.8,
+                radius: 8
+            }).addTo(map);
+            marker.bindPopup(place.title);
+        });
+    </script>
+</body>
+</html>

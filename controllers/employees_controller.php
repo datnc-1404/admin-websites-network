@@ -31,5 +31,30 @@ class EmployeesController extends BaseController
     } else {
         echo json_encode(array('success' => false, 'message' => 'Invalid request.'));
     }
-}
+  }
+
+  public function addEmployee() {
+    if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['MaNV'], $_POST['TenNV'], $_POST['NS'], $_POST['DC'], $_POST['CV'], $_POST['ID_TK'])) {
+        // Lấy dữ liệu từ biến POST
+        $MaNV = $_POST['MaNV'];
+        $TenNV = $_POST['TenNV'];
+        $NS = $_POST['NS'];
+        $DC = $_POST['DC'];
+        $CV = $_POST['CV'];
+        $ID_TK = $_POST['ID_TK'];
+
+        // Thực hiện thêm nhân viên
+        $result = Employee::add($MaNV, $TenNV, $NS, $DC, $CV, $ID_TK);
+
+        // Trả về kết quả
+        if ($result) {
+            echo json_encode(array('success' => true, 'message' => "Thêm nhân viên thành công!"));
+        } else {
+            echo json_encode(array('success' => false, 'message' => "Thêm nhân viên thất bại!"));
+        }
+    } else {
+        // Trường hợp request không hợp lệ
+        echo json_encode(array('success' => false, 'message' => 'Invalid request.'));
+    }
+  }
 }

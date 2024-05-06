@@ -300,6 +300,16 @@ if (!isset($_SESSION['username'])) {
               </a>
             </li>
             </ul>
+            <ul class="nav nav-treeview">
+              <li class="nav-item">
+              <a href="index.php?controller=ggmap&action=index" class="nav-link">
+              <i class="bi bi-geo-alt"></i>
+              <p>
+                Google Map
+              </p>
+              </a>
+            </li>
+            </ul>
           </li>
         </ul>
       </nav>
